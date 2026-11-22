@@ -53,9 +53,17 @@ public class Conta {
      *   - O saldo deve ser atualizado corretamente.
      */
     public void depositar(double valor) {
-        // TODO: Implemente usando TDD
-        throw new UnsupportedOperationException();
+
+    if (!ativa) {
+        throw new IllegalStateException("Conta inativa");
     }
+
+    if (valor <= 0) {
+        throw new IllegalArgumentException("Valor deve ser positivo");
+    }
+
+    saldo += valor;
+}
 
     /**
      * Saca um valor da conta.
@@ -66,8 +74,20 @@ public class Conta {
      *   - O saldo deve ser atualizado corretamente.
      */
     public void sacar(double valor) {
-        // TODO: Implemente usando TDD
-        throw new UnsupportedOperationException();
+    if (!ativa) {
+        throw new IllegalStateException("Conta inativa");
+    }
+
+    if (valor <= 0) {
+        throw new IllegalArgumentException("Valor inválido");
+    }
+
+    if (valor > saldo) {
+    throw new IllegalStateException("Saldo insuficiente");
+    }
+
+    saldo -= valor;
+
     }
 
     /**
@@ -79,8 +99,27 @@ public class Conta {
      *   - O saldo de ambas as contas deve ser atualizado corretamente.
      */
     public void transferir(Conta destino, double valor) {
-        // TODO: Implemente usando TDD
-        throw new UnsupportedOperationException();
+        if (!ativa) {
+            throw new IllegalStateException("Conta de origem inativa.");
+    }
+
+       if (!destino.ativa) {
+            throw new IllegalStateException("A conta de destino está inativa.");
+    }
+
+        if (valor <= 0) {
+            throw new IllegalArgumentException(
+            "O valor da transferência deve ser maior que zero."
+        );
+    }
+
+        if (valor > saldo) {
+            throw new IllegalStateException("Saldo insuficiente.");
+    }
+
+        saldo -= valor;
+        destino.saldo += valor;
+
     }
 
     /**
@@ -90,8 +129,18 @@ public class Conta {
      *   - O saldo deve ser zero para encerrar (lançar IllegalStateException se houver saldo).
      *   - A propriedade ativa deve ser alterada para false.
      */
+
     public void encerrar() {
-        // TODO: Implemente usando TDD
-        throw new UnsupportedOperationException();
+    if (!ativa) {
+        throw new IllegalStateException("Conta já está inativa");
+    }
+
+    if (saldo > 0) {
+        throw new IllegalStateException("Não é possível encerrar uma conta com saldo");
+    }
+
+    ativa = false;
     }
 }
+
+
